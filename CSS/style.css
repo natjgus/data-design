@@ -1,8 +1,21 @@
+body {
+	background-color: burlywood;
+}
+
+h1 {
+	text-align: center;
+}
+
 .screenshot{
 	height: 50%;
 	width: 50%;
+	display: inline-block;
+	float: right;
+
 }
 
-body {
-	background-color: burlywood;
+.entities {
+	background-color: lightgrey;
+	padding-right: 10em;
+	border-block-end: 1px;
 }
