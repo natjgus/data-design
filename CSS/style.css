@@ -9,13 +9,10 @@ h1 {
 .screenshot{
 	height: 50%;
 	width: 50%;
-	display: inline-block;
-	float: right;
-
 }
 
 .entities {
 	background-color: lightgrey;
 	padding-right: 10em;
-	border-block-end: 1px;
+
 }
