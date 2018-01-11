@@ -2,8 +2,10 @@ body {
 	background-color: burlywood;
 }
 
-h1 {
+.main-title {
 	text-align: center;
+	background-color: lightblue;
+	border: 1px solid lightgrey;
 }
 
 .screenshot{
@@ -12,8 +14,8 @@ h1 {
 }
 
 .entities {
-	background-color: lightgrey;
-	padding-right: 10em;
+	background-color: lightblue;
+	border: 1px solid lightgrey;
 }
 
 th, td {

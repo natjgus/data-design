@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="CSS/style.css">
 	</head>
 	<body>
-		<h1>Data Design of the Medium Website</h1>
+		<h1 class="main-title"> Data Design of the Medium Website</h1>
 		<section class="persona">
 			<h2>Persona</h2>
 			<ul>
@@ -50,36 +50,42 @@
 			<h2>Medium Webpage Data Design</h2>
 			<img class="screenshot" src="images/medium-data-design-final.png" alt="data design page"/>
 		</section>
-		<section>
+		<section class="entities">
 			<h2>Medium's Entities and Attributes</h2>
-			<h4>User Profile</h4>
+			<h4>Profile (Strong entity)</h4>
 			<ul>
-				<li><em>memberUserId (Parent key)</em></li>
-				<li>memberName</li>
-				<li>memberEmail</li>
-				<li>memberPassword</li>
-				<li>memberProfile</li>
+				<li><em>profileId (Parent key)</em></li>
+				<li>profileActivationToken</li>
+				<li>profileAtHandle</li>
+				<li>profileEmail</li>
+				<li>profileHash</li>
+				<li>profilePhone</li>
+				<li>profileSalt</li>
 			</ul>
-			<h4>Article</h4>
+			<h4>Article (Strong Entity)</h4>
 				<ul>
 					<li><em>articleId (Parent key)</em></li>
 					<li>articleTitle</li>
 					<li>articleContent</li>
-					<li>articleAuthor (Foreign key)</li>
+					<li>articleProfileId (Foreign key)</li>
 					<li>articlePublishDate</li>
 				</ul>
-			<h4>Clap</h4>
+			<h4>Clap (try hard)</h4>
 			<ul>
 				<li><em>clapId (Parent key)</em></li>
-				<li>clapMemberId (Foreign key)</li>
+				<li>clapProfileId (Foreign key)</li>
 				<li>clapArticleId (Foreign key)</li>
-				<li>clapNumber</li>
+				<li>clapCount</li>
 			</ul>
 		</section>
 		<section class="relationships">
-			<h2>Relationships</h2>
-			<h3>User to Articles</h3>
-			<li>One to Many</li>
+			<h2>Relationships:</h2>
+			<h4>Profile to Article</h4>
+			<p>One to Many (If co-authorship were allowed this would be Many to Many)</p>
+			<h4>Profile to Clap</h4>
+			<p>One to Many</p>
+			<h4>Article to Clap</h4>
+			<p>One to Many</p>
 		</section>
 	</body>
 </html>
