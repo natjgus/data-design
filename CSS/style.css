@@ -14,5 +14,16 @@ h1 {
 .entities {
 	background-color: lightgrey;
 	padding-right: 10em;
+}
 
+th, td {
+	border-right: 1px solid #ddd;
+	text-align: left;
+	padding: .3em;
+}
+
+th {
+	border-bottom-style: dashed;
+	padding-bottom: .5em;
+	background-color: lightgrey;
 }

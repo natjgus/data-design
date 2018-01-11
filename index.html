@@ -48,31 +48,33 @@
 		</section>
 		<section>
 			<h2>Medium Webpage Data Design</h2>
-			<img class="screenshot" src="images/Medium-Data-Design-Main.png" alt="data design"/>
-			<img class="screenshot" src="images/Medium-Data-Design.png" alt="data design page 2"/>
+			<img class="screenshot" src="images/medium-data-design-final.png" alt="data design page"/>
 		</section>
-		<section class="entities">
-			<h2>Medium's Entities & Attributes</h2>
+		<section>
+			<h2>Medium's Entities and Attributes</h2>
 			<h4>User Profile</h4>
+			<ul>
+				<li><em>memberUserId (Parent key)</em></li>
+				<li>memberName</li>
+				<li>memberEmail</li>
+				<li>memberPassword</li>
+				<li>memberProfile</li>
+			</ul>
+			<h4>Article</h4>
 				<ul>
-					<li>profileName</li>
-					<li>profileTopStories</li>
-					<li>profileTag</li>
-					<li>profileStartDate</li>
-				</ul>
-			<h4>Articles</h4>
-				<ul>
-					<li>articleName</li>
+					<li><em>articleId (Parent key)</em></li>
+					<li>articleTitle</li>
 					<li>articleContent</li>
-					<li>articleDate</li>
+					<li>articleAuthor (Foreign key)</li>
+					<li>articlePublishDate</li>
 				</ul>
-			<h4>Responses</h4>
-				<ul>
-					<li>responseID</li>
-					<li>responseContent</li>
-					<li>responseDate</li>
-					<li>responseClapCount</li>
-				</ul>
+			<h4>Clap</h4>
+			<ul>
+				<li><em>clapId (Parent key)</em></li>
+				<li>clapMemberId (Foreign key)</li>
+				<li>clapArticleId (Foreign key)</li>
+				<li>clapNumber</li>
+			</ul>
 		</section>
 		<section class="relationships">
 			<h2>Relationships</h2>
