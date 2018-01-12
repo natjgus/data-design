@@ -13,7 +13,7 @@
 				<li>Name: Kat Fitzgerald</li>
 				<li>Gender: Female</li>
 				<li>Age: 29</li>
-				<li>Technology: </li>
+				<li>Technology:</li>
 				<ul>
 					<li>Uses MacBook Air and iPhone X</li>
 					<li>Always has iPhone in her hand</li>
@@ -28,7 +28,9 @@
 		</section>
 		<section>
 			<h2>Use Case</h2>
-			<p>Kat posts her weekly article about the pluses of millenials starting to join the political sphere. 3 hours after publication she realizes that there is a glaring typo that she must fix. Google Docs changed the word "pluses" to "perils." She needs to edit the article without deleting the article and associated comments</p>
+			<p>Kat posts her weekly article about the pluses of millenials starting to join the political sphere. 3 hours
+				after publication she realizes that there is a glaring typo that she must fix. Google Docs changed the word
+				"pluses" to "perils." She needs to edit the article without deleting the article and associated comments</p>
 			<p>Precondition: Kat is a registered user</p>
 			<p>Postcondition: Article post is updated</p>
 		</section>
@@ -54,7 +56,7 @@
 			<h2>Medium's Entities and Attributes</h2>
 			<h4>Profile (Strong entity)</h4>
 			<ul>
-				<li><em>profileId (Parent key)</em></li>
+				<li><em>profileId (Primary key)</em></li>
 				<li>profileActivationToken</li>
 				<li>profileAtHandle</li>
 				<li>profileEmail</li>
@@ -63,16 +65,16 @@
 				<li>profileSalt</li>
 			</ul>
 			<h4>Article (Strong Entity)</h4>
-				<ul>
-					<li><em>articleId (Parent key)</em></li>
-					<li>articleTitle</li>
-					<li>articleContent</li>
-					<li>articleProfileId (Foreign key)</li>
-					<li>articlePublishDate</li>
-				</ul>
-			<h4>Clap (try hard)</h4>
 			<ul>
-				<li><em>clapId (Parent key)</em></li>
+				<li><em>articleId (Primary key)</em></li>
+				<li>articleTitle</li>
+				<li>articleContent</li>
+				<li>articleProfileId (Foreign key)</li>
+				<li>articlePublishDate</li>
+			</ul>
+			<h4>Clap (Weak)</h4>
+			<ul>
+				<li><em>clapId (Primary key)</em></li>
 				<li>clapProfileId (Foreign key)</li>
 				<li>clapArticleId (Foreign key)</li>
 				<li></li>
