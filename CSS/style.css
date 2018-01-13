@@ -13,9 +13,23 @@ body {
 	width: 50%;
 }
 
-.entities {
+.erd-image{
+	height: 5em;
+	width: 5em;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+.entities, .persona, .interaction-flow, .relationships, .use-case, .user-story {
 	background-color: lightblue;
 	border: 1px solid lightgrey;
+	margin-bottom: .4em;
+}
+
+.support-photo {
+	text-align: center;
 }
 
 th, td {
