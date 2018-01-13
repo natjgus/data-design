@@ -20,13 +20,7 @@ CREATE TABLE profile (
 	-- this officiates the primary key for the entity
 	PRIMARY KEY(profileId)
 );
-<h4>Article (Strong Entity)</h4>
-<ul>
-<li><em>articleId (Primary key)</em></li>
-<li>articleTitle</li>
-<li>articleContent</li>
-<li>articleProfileId (Foreign key)</li>
-<li>articlePublishDate</li>
+
 -- create the article entity
 CREATE TABLE article (
 	-- this is for yet another primary key...
