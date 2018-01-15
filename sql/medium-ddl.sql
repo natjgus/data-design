@@ -28,7 +28,7 @@ CREATE TABLE article (
 	-- this is for a foreign key
 	articleProfileId BINARY(16) NOT NULL,
 	articleTitle VARCHAR(100),
-	articleContent VARCHAR(140) NOT NULL,
+	articleContent VARCHAR(5000) NOT NULL,
 	articlePublishDate DATETIME(6) NOT NULL,
 	-- this creates an index before making a foreign key
 	INDEX(articleProfileId),

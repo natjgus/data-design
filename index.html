@@ -67,16 +67,16 @@
 			<h4>Article (Strong Entity)</h4>
 			<ul>
 				<li><em>articleId (Primary key)</em></li>
+				<li>articleProfileId (Foreign key)</li>
 				<li>articleTitle</li>
 				<li>articleContent</li>
-				<li>articleProfileId (Foreign key)</li>
 				<li>articlePublishDate</li>
 			</ul>
 			<h4>Clap (Weak)</h4>
 			<ul>
 				<li><em>clapId (Primary key)</em></li>
-				<li>clapProfileId (Foreign key)</li>
 				<li>clapArticleId (Foreign key)</li>
+				<li>clapProfileId (Foreign key)</li>
 			</ul>
 		</section>
 		<section class="relationships">
