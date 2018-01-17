@@ -82,3 +82,10 @@ SELECT likeProfileId, profileAtHandle
 FROM `like`
 	INNER JOIN profile ON profile.profileId = `like`.likeProfileId
 WHERE likeTweetId = "d0a6cb6a-078d-4603-93b6-b996c515d7ce";
+
+
+
+
+SELECT profileId, articleProfileId
+FROM article
+	INNER JOIN profile ON profile.profileId = article.articleProfileId;
