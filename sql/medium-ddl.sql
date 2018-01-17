@@ -54,3 +54,31 @@ CREATE TABLE clap (
 	-- finally, create a composite foreign key with the two foreign keys
 	PRIMARY KEY(clapArticleId, clapProfileId)
 );
+
+-- UPDATE PROTOCOL
+UPDATE entity
+SET attribute0 = value0, attribute1 = value1, ..., attributek = valuek
+WHERE <filter expression>
+
+-- DELETE
+DELETE FROM entity
+WHERE <filter expression>
+
+-- SELECT
+SELECT attribute0, attribute1, ..., attributek
+FROM entity
+WHERE <filter expression>
+
+-- what is the longest tweet?
+SELECT tweetId, LENGTH(tweetContent)
+FROM tweet
+ORDER BY LENGTH(tweetContent) DESC
+-- ORDER BY sorts, DESC specifies descending
+LIMIT 1;
+-- LIMIT 1 grabs just the first result
+
+-- who liked this tweet? (better way)
+SELECT likeProfileId, profileAtHandle
+FROM `like`
+	INNER JOIN profile ON profile.profileId = `like`.likeProfileId
+WHERE likeTweetId = "d0a6cb6a-078d-4603-93b6-b996c515d7ce";
