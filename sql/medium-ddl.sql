@@ -44,7 +44,7 @@ CREATE TABLE clap (
 	clapArticleId BINARY(16) NOT NULL,
 	clapProfileId BINARY(16) NOT NULL ,
 
-	likeDate DATETIME(6) NOT NULL,
+	clapDate DATETIME(6) NOT NULL,
 	-- index the foreign keys
 	INDEX(clapArticleId),
 	INDEX(clapProfileId),
