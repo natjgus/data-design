@@ -58,16 +58,16 @@ CREATE TABLE clap (
 -- UPDATE PROTOCOL
 UPDATE entity
 SET attribute0 = value0, attribute1 = value1, ..., attributek = valuek
-WHERE <filter expression>
+WHERE <filter expression>;
 
 -- DELETE
 DELETE FROM entity
-WHERE <filter expression>
+WHERE <filter expression>;
 
 -- SELECT
 SELECT attribute0, attribute1, ..., attributek
 FROM entity
-WHERE <filter expression>
+WHERE <filter expression>;
 
 -- what is the longest tweet?
 SELECT tweetId, LENGTH(tweetContent)
