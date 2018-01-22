@@ -201,6 +201,6 @@ class Article {
 			throw(new \RangeException("title content too large"));
 		}
 		// store the title content
-		$this->articleTitle = $newArticleTitle
+		$this->articleTitle = $newArticleTitle;
 	}
 }
