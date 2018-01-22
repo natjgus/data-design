@@ -164,7 +164,7 @@ class Profile{
 	public function setProfileEmail(string $newProfileEmail): void {
 		// verify the email is secure
 		$newProfileEmail = trim($newProfileEmail);
-		$newProfileEmail = filter_var($newProfileEmail, FILTER_VALIDATE_EMAIL);
+		$newProfileEmail = filter_var($newProfileEmail, FILTER_SANITIZE_EMAIL);
 		if(empty($newProfileEmail) === true) {
 			throw(new \InvalidArgumentException("profile email is empty or insecure"));
 		}
@@ -278,4 +278,3 @@ class Profile{
 
 }
 
-?>
