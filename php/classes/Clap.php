@@ -1,8 +1,8 @@
 <?php
 namespace Edu\Cnm\DataDesign;
 
-require_once("autoload.php");
-require_once(dirname(__DIR__, 2) . "autoload.php");
+require_once("autoload.php"); /**this is us, next require is them **/
+require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 /**
@@ -20,9 +20,13 @@ class Clap {
 	use ValidateDate;
 	use ValidateUuid;
 	/** id of the clap; this is the parent key
-	* @var Uuid %clapId
+	* @var Uuid $clapId
 	 */
 	private $clapId;
+
+	/** id for the article that was clapped; this is a foreign key
+	 * @var Uuid $clapArticleId
+	 */
 	private $clapArticleId;
 	/**
 	 * id of the Profile that sent this clap; this is a foreign key
@@ -35,11 +39,6 @@ class Clap {
 	 **/
 	private $clapDate;
 
-	/**
-	 * accessor method for clap id
-	 *
-	 * @return Uuid value of clap id
-	 */
 	/**
 	 * accessor method for clap  id
 	 *
@@ -63,20 +62,20 @@ class Clap {
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 		// convert and store the clap id
-		$this->clapId= $uuid;
+		$this->clapId = $uuid;
 	}
 	/**
 	 * accessor method for clap article id
 	 *
 	 * @return Uuid value of clap article id
 	 **/
-	public function getClapArticleId() : Uuid{
+	public function getClapArticleId() : Uuid {
 		return($this->clapArticleId);
 	}
 	/**
 	 * mutator method for clap article id
 	 *
-	 * @param string | Uuid $newClapArticleId new value of clap article id
+	 * @param string|Uuid $newClapArticleId new value of clap article id
 	 * @throws \RangeException if $newClapArticleId is not positive
 	 * @throws \TypeError if $newClapArticleId is not an integer
 	 **/
@@ -88,7 +87,7 @@ class Clap {
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 		// convert and store the profile id
-		$this->clapArticleId= $uuid;
+		$this->clapArticleId = $uuid;
 	}
 	/**
 	 * accessor method for clap profile id
@@ -101,7 +100,7 @@ class Clap {
 	/**
 	 * mutator method for clap profile id
 	 *
-	 * @param string | Uuid $newClapProfileId new value of clap profile id
+	 * @param string|Uuid $newClapProfileId new value of clap profile id
 	 * @throws \RangeException if $newClapProfileId is not positive
 	 * @throws \TypeError if $newClapProfileId is not an integer
 	 **/
