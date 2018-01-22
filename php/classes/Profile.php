@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\DataDesign;
+namespace Edu\Cnm\Ngustafson\DataDesign;
 require_once("autoload.php");
 require_once(dirname(__DIR__) . "autoload.php");
 use Ramsey\Uuid\Uuid;
@@ -64,13 +64,13 @@ class Profile{
 	 *
 	 * @return Uuid value of profile id (or null if new Profile)
 	 **/
-	public function getProfileId(): Uuid {
+	public function getProfileId() : Uuid {
 		return ($this->profileId);
 	}
 	/**
 	 * mutator function for profileId
 	 *
-	 * @param Uuid | string $newProfileId with the value of profileId
+	 * @param Uuid|string $newProfileId with the value of profileId
 	 * @throws \RangeException if $newProfileId is not positive
 	 * @throws \TypeError id profile id is not positive
 	 **/
@@ -107,7 +107,7 @@ class Profile{
 		}
 		$newProfileActivationToken = strtolower(trim($newProfileActivationToken));
 		if(ctype_xdigit($newProfileActivationToken) === false) {
-			throw(new\RangeException("user activation is not valid"));
+			throw(new\InvalidArgumentException("user activation is not valid"));
 		}
 		//make sure user activation token is only 32 characters
 		if(strlen($newProfileActivationToken) !== 32) {
