@@ -2,7 +2,7 @@
 namespace Edu\Cnm\DataDesign;
 
 require_once("autoload.php");
-require_once(dirname(__DIR__, 2) . "../vendor/autoload.php");
+require_once(dirname(__DIR__, 2) . "../../vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 /**
@@ -202,5 +202,17 @@ class Article implements \JsonSerializable {
 		}
 		// store the title content
 		$this->articleTitle = $newArticleTitle;
+	}
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["profileId"] = $this->ArticleId->toString();
+		unset($fields["profileHash"]);
+		unset($fields["profileSalt"]);
+		return ($fields);
 	}
 }

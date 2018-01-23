@@ -144,4 +144,16 @@ class Clap implements \JsonSerializable {
 		}
 		$this->clapDate = $newClapDate;
 	}
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["profileId"] = $this->clapId->toString();
+		unset($fields["profileHash"]);
+		unset($fields["profileSalt"]);
+		return ($fields);
+	}
 }

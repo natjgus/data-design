@@ -275,6 +275,17 @@ class Profile implements \JsonSerializable {
 		//store the hash
 		$this->profileSalt = $newProfileSalt;
 	}
-
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["profileId"] = $this->profileId->toString();
+		unset($fields["profileHash"]);
+		unset($fields["profileSalt"]);
+		return ($fields);
+	}
 }
 
