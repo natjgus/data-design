@@ -16,7 +16,7 @@ use Ramsey\Uuid\Uuid;
  * @package Edu\Cnm\DataDesign
  **/
 
-class Clap {
+class Clap implements \JsonSerializable {
 	use ValidateDate;
 	use ValidateUuid;
 	/** id of the clap; this is the parent key
@@ -50,7 +50,7 @@ class Clap {
 	/**
 	 * mutator method for clap id
 	 *
-	 * @param string | Uuid $newClapId new value of clap id
+	 * @param string|Uuid $newClapId new value of clap id
 	 * @throws \RangeException if $newClapId is not positive
 	 * @throws \TypeError if $newClapId is not an integer
 	 **/

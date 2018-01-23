@@ -11,7 +11,7 @@ use Ramsey\Uuid\Uuid;
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
  * @version 4.0.0
  **/
-class Profile{
+class Profile implements \JsonSerializable {
 	use ValidateUuid;
 	/**
 	 * id of the Profile that published the article. This is the primary key.

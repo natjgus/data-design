@@ -16,7 +16,7 @@ use Ramsey\Uuid\Uuid;
  * @package Edu\Cnm\DataDesign
  **/
 
-class Article {
+class Article implements \JsonSerializable {
 	use ValidateDate;
 	use ValidateUuid;
 	/**
