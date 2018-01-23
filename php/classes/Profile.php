@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\Ngustafson\DataDesign;
 require_once("autoload.php");
-require_once(dirname(__DIR__) . "autoload.php");
+require_once(dirname(__DIR__, 2) . "autoload.php");
 use Ramsey\Uuid\Uuid;
 /**
  * Small Cross Section of a Medium Profile
