@@ -157,7 +157,7 @@ class Article implements \JsonSerializable {
 	 * @return \DateTime value of article date
 	 **/
 	public function getArticlePublishDate(): \DateTime {
-		return ($this->articlePublishDateDate);
+		return ($this->articlePublishDate);
 	}
 	/**
 	 * mutator method for article date
@@ -169,17 +169,17 @@ class Article implements \JsonSerializable {
 	public function setArticlePublishDate($newArticlePublishDate = null): void {
 		// base case: if the date is null, use the current date and time
 		if($newArticlePublishDate === null) {
-			$this->articlePublishDateDate = new \DateTime();
+			$this->articlePublishDate = new \DateTime();
 			return;
 		}
 		// store the like date using the ValidateDate trait
 		try {
-			$newArticlePublishDateDate = self::validateDateTime($newArticlePublishDate);
+			$newArticlePublishDate = self::validateDateTime($newArticlePublishDate);
 		} catch(\InvalidArgumentException | \RangeException $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		$this->articlePublishDateDate = $newArticlePublishDateDate;
+		$this->articlePublishDate = $newArticlePublishDate;
 	}
 	/**
 	 * mutator method for article title
@@ -203,6 +203,28 @@ class Article implements \JsonSerializable {
 		// store the title content
 		$this->articleTitle = $newArticleTitle;
 	}
+
+	/**
+	 * inserts this Article into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) : void {
+		//create query template
+		$query = "INSERT INTO Article(articleId, articleProfileId, articleContent, articlePublishDate) VALUES(:articleId, :articleProfileId, :articleContent, :articlePublishDate)";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holders in the template
+		$formattedDate = $this->articlePublishDate->format("Y-m-d H:i:s.u");
+		$parameters = ["articleId" => $this->articleId->getBytes(), "articleProfileId" => $this->articleProfileId->getBytes(), "articleContent" => $this->articleContent, "articlePublishDate" => $formattedDate];
+		$statement->execute($parameters);
+
+	}
+
+
+
 	/**
 	 * formats the state variables for JSON serialization
 	 *
@@ -210,7 +232,7 @@ class Article implements \JsonSerializable {
 	 **/
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
-		$fields["profileId"] = $this->ArticleId->toString();
+		$fields["profileId"] = $this->articleId->toString();
 		unset($fields["profileHash"]);
 		unset($fields["profileSalt"]);
 		return ($fields);

@@ -19,8 +19,8 @@ class Profile implements \JsonSerializable {
 	 */
 	private $profileId;
 	/**
-	 * name of person associated with the profile
-	 * @var string $profileFullName
+	 * token handed out to verify that account is not malicious. This is unique!
+	 * @var string $profileActivationToken
 	 **/
 	private $profileActivationToken;
 	/**
@@ -35,11 +35,6 @@ class Profile implements \JsonSerializable {
 	/**
 	 * hash for profile password
 	 * @var string $profileHash
-	 **/
-	private $profileFullName;
-	/**
-	 * token handed out to verify that account is not malicious. This is unique!
-	 * @var string $profileActivationToken
 	 **/
 	private $profileHash;
 	/**
@@ -275,6 +270,31 @@ class Profile implements \JsonSerializable {
 		//store the hash
 		$this->profileSalt = $newProfileSalt;
 	}
+
+	/**
+	 * inserts this Profile into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo): void {
+		// create query template
+		$query = "INSERT INTO profile(profileId, profileActivationToken, profileEmail, profileHash, profilePhone, profileSalt) VALUES (:profileId, :profileActivationToken, :profileEmail, :profileHash, :profilePhone, :profileSalt)";
+		$statement = $pdo->prepare($query);
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash,"profilePhone" => $this->profilePhone, "profileSalt" => $this->profileSalt];
+		$statement->execute($parameters);
+	}
+	/**
+	 * deletes this Profile from mySQL
+	 *
+	 * @param \
+	 */
+
+
+
+
+
 	/**
 	 * formats the state variables for JSON serialization
 	 *
