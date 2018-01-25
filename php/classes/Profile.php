@@ -24,9 +24,10 @@ class Profile implements \JsonSerializable {
 	 **/
 	private $profileActivationToken;
 	/**
-	 * @var string $profileCaption
-	 **/
-	private $profileCaption;
+	 * this is the at handle for this profile
+	 * @var string $profileAtHandle
+	 */
+	private $profileAtHandle;
 	/**
 	 * email associated with this profile; this is a unique index
 	 * @var string $profileEmail
@@ -280,7 +281,7 @@ class Profile implements \JsonSerializable {
 	 **/
 	public function insert(\PDO $pdo): void {
 		// create query template
-		$query = "INSERT INTO profile(profileId, profileActivationToken, profileEmail, profileHash, profilePhone, profileSalt) VALUES (:profileId, :profileActivationToken, :profileEmail, :profileHash, :profilePhone, :profileSalt)";
+		$query = "INSERT INTO profile(profileId, profileActivationToken, profileAtHandle, profileEmail, profileHash, profilePhone, profileSalt) VALUES (:profileId, :profileActivationToken, :profileAtHandle, :profileEmail, :profileHash, :profilePhone, :profileSalt)";
 		$statement = $pdo->prepare($query);
 		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash,"profilePhone" => $this->profilePhone, "profileSalt" => $this->profileSalt];
 		$statement->execute($parameters);
@@ -288,14 +289,33 @@ class Profile implements \JsonSerializable {
 	/**
 	 * deletes this Profile from mySQL
 	 *
-	 * @param \
-	 */
-
-
-
-
-
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo): void {
+		// create query template
+		$query = "DELETE FROM profile WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
+		//bind the member variables to the place holders in the template
+		$parameters = ["profileId" => $this->profileId->getBytes()];
+		$statement->execute($parameters);
+	}
 	/**
+	 * updates this Profile from SQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 */
+	public function update(\PDO $pdo): void {
+		//create query template
+		$query = "UPDATE profile SET pro
+	}
+
+
+
+
+		/**
 	 * formats the state variables for JSON serialization
 	 *
 	 * @return array resulting state variables to serialize

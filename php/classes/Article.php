@@ -220,8 +220,9 @@ class Article implements \JsonSerializable {
 		$formattedDate = $this->articlePublishDate->format("Y-m-d H:i:s.u");
 		$parameters = ["articleId" => $this->articleId->getBytes(), "articleProfileId" => $this->articleProfileId->getBytes(), "articleContent" => $this->articleContent, "articlePublishDate" => $formattedDate];
 		$statement->execute($parameters);
-
 	}
+
+
 
 
 
