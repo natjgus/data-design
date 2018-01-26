@@ -213,13 +213,44 @@ class Article implements \JsonSerializable {
 	 **/
 	public function insert(\PDO $pdo) : void {
 		//create query template
-		$query = "INSERT INTO Article(articleId, articleProfileId, articleContent, articlePublishDate) VALUES(:articleId, :articleProfileId, :articleContent, :articlePublishDate)";
+		$query = "INSERT INTO article(articleId, articleProfileId, articleContent, articlePublishDate) VALUES(:articleId, :articleProfileId, :articleContent, :articlePublishDate)";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
 		$formattedDate = $this->articlePublishDate->format("Y-m-d H:i:s.u");
 		$parameters = ["articleId" => $this->articleId->getBytes(), "articleProfileId" => $this->articleProfileId->getBytes(), "articleContent" => $this->articleContent, "articlePublishDate" => $formattedDate];
 		$statement->execute($parameters);
+	}
+	/**
+	 *deletes this article from mySQL
+	 *
+	 *@param \PDO $pdo PDO connection object
+	 *@throws \PDOException when mySQL related error occurs
+	 *@throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) : void {
+		// create query template
+		$query = "DELETE FROM article WHERE articleId = :articleId";
+		$statement = $pdo->prepare($query);
+		// bind the member variables to the place holder in the template
+		$parameters = ["articleId" => $this->articleId->getBytes()];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * update this article in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related error occurs
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
+	public function update(\PDO $pdo) : void {
+		//create query template
+		$query = "UPDATE article SET articleProfileId = :articleProfileId, articleContent = :articleContent, articlePublishDate = :articlePublishDate WHERE articleId = :articleId";
+		$statement = $pdo->prepare($query);
+
+		$formattedDate = $this->articlePublishDate->format("Y-m-d H:i:s.u");
+		$parameters = ["articleId" => $this->articleId->getBytes(), "articleProfileId" => $this->articleProfileId->getBytes(), "articleContent" => $this->articleContent, "articlePublishDate" => $formattedDate];
 	}
 
 
