@@ -251,9 +251,149 @@ class Article implements \JsonSerializable {
 
 		$formattedDate = $this->articlePublishDate->format("Y-m-d H:i:s.u");
 		$parameters = ["articleId" => $this->articleId->getBytes(), "articleProfileId" => $this->articleProfileId->getBytes(), "articleContent" => $this->articleContent, "articlePublishDate" => $formattedDate];
+		$statement->execute($parameters);
 	}
 
-
+	/**
+	 * gets the Tweet by articleId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string|Uuid $articleId to search for
+	 * @return Article|null article found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable is not the correct data type
+	 **/
+	public static function getArticleByArticleId(\PDO $pdo, $articleId) : ?Article {
+		//sanitize the articleId before searching
+		try{
+			$articleId = self::validateUuid($articleId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		//create media query template
+		$query = "SELECT articleId, articleProfileId, articleContent, articlePublishDate FROM article WHERE articleId = articleId";
+		$statement = $pdo->prepare($query);
+		//bind the article id to the place holder in the template
+		$parameters = ["articleId" => $articleId->getBytes()];
+		$statement->execute($parameters);
+		// grab the article from mySQL
+		try {
+			$article = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if ($row !== false) {
+				$article = new Article($row["articleId"], $row["articleProfileId"], $row["articleContent"], $row["articlePublishDate"]);
+			}
+		} catch(\Exception $exception){
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(),0, $exception));
+		}
+		return($article);
+	}
+	/**
+	 * gets the article by profile id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string|Uuid $articleProfileId profile id to search by
+	 * @return \SplFixedArray SplFixedArray of articles found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getArticleByProfileId(\PDO $pdo, $articleProfileId) : \SPLFixedArray {
+		try {
+			$articleProfileId = self::validateUuid($articleProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT articleId, articleProfileId, articleContent, articlePublishDate FROM article WHERE articleProfileId = :articleProfileId";
+		$statement = $pdo->prepare($query);
+		// bind the article profile id to the place holder in the template
+		$parameters = ["articleProfileId" => $articleProfileId->getBytes()];
+		$statement->execute($parameters);
+		// build an array of articles
+		$article = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$article = new Article($row["articleId"], $row["articleProfileId"], $row["articleContent"], $row["articleDate"]);
+				$articles[$articles->key()] = $article;
+				$articles->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($articles);
+	}
+	/**
+	 * gets the article by content
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $articleContent article content to search for
+	 * @return \SplFixedArray SplFixedArray of articles found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getArticleByArticleContent(\PDO $pdo, string $articleContent) : \SPLFixedArray {
+		// sanitize the description before searching
+		$articleContent = trim($articleContent);
+		$articleContent = filter_var($articleContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($articleContent) === true) {
+			throw(new \PDOException("article content is invalid"));
+		}
+		// escape any mySQL wild cards
+		$articleContent = str_replace("_", "\\_", str_replace("%", "\\%", $articleContent));
+		// create query template
+		$query = "SELECT articleId, articleProfileId, articleContent, articlePublishDate FROM article WHERE articleContent LIKE :articleContent";
+		$statement = $pdo->prepare($query);
+		// bind the article content to the place holder in the template
+		$articleContent = "%$articleContent%";
+		$parameters = ["articleContent" => $articleContent];
+		$statement->execute($parameters);
+		// build an array of articles
+		$articles = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$article = new Article($row["articleId"], $row["articleProfileId"], $row["articleContent"], $row["articlePublishDate"]);
+				$articles[$articles->key()] = $article;
+				$articles->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($articles);
+	}
+	/**
+	 * gets all articles
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of articles found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllArticles(\PDO $pdo) : \SPLFixedArray {
+		// create query template
+		$query = "SELECT articleId, articleProfileId, articleContent, articlePublishDate FROM article";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+		// build an array of articles
+		$articles = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$article = new Article($row["articleId"], $row["articleProfileId"], $row["articleContent"], $row["articlePublishDate"]);
+				$articles[$articles->key()] = $article;
+				$articles->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($articles);
+	}
 
 
 
@@ -262,11 +402,12 @@ class Article implements \JsonSerializable {
 	 *
 	 * @return array resulting state variables to serialize
 	 **/
-	public function jsonSerialize() {
+	public function jsonSerialize() : array {
 		$fields = get_object_vars($this);
 		$fields["profileId"] = $this->articleId->toString();
-		unset($fields["profileHash"]);
-		unset($fields["profileSalt"]);
+		$fields["articleProfileId"] = $this->articleProfileId->toString();
+		$fields["articleContent"] = $this->articleContent->toString();
+		$fields["articlePublishDate"] = round(floatval($this->articlePublishDate->format("U.u"))*1000);
 		return ($fields);
 	}
 }
